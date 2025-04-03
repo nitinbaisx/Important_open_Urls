@@ -12,10 +12,12 @@ class Invitemember extends StatefulWidget {
 }
 
 class _InvitememberState extends State<Invitemember> {
-  bool groupValue = false;
+  bool groupValue = true;
   String? selectedCategory;
 
-  List<String> selectedItem = [];
+  String selectedItem = '';
+
+  double height = 370;
 
   final List<String> newItems = [
     "Advisor/Board Member",
@@ -42,262 +44,371 @@ class _InvitememberState extends State<Invitemember> {
       body: SafeArea(
           child: Center(
         child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 8),
             child: Column(
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Dialog(
-                              backgroundColor: AppColors.white,
-                              child: StatefulBuilder(builder:
-                                  (BuildContext context, StateSetter setState) {
-                                return SingleChildScrollView(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12.0, vertical: 08.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            const TextWidget(
-                                              text: 'Invite',
-                                              textSize: 24,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.headBlackColor,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: Image.asset(
-                                                ImagePath.crosscircle,
-                                                width: 20,
-                                                height: 20,
-                                                fit: BoxFit.contain,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Column(
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          backgroundColor: AppColors.white,
+                          child: StatefulBuilder(builder:
+                              (BuildContext context, StateSetter setState) {
+                            return SizedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.center,
                                         children: [
-                                          Row(
+                                          const TextWidget(
+                                            text: 'Invite',
+                                            textSize: 26,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.headBlackColor,
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Image.asset(
+                                              ImagePath.crosscircle,
+                                              width: 20,
+                                              height: 20,
+                                              fit: BoxFit.contain,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 30,
+                                          child: Row(
                                             children: [
                                               Radio<bool>(
                                                 groupValue: groupValue,
                                                 value: true,
+                                                fillColor: MaterialStateProperty.resolveWith((states) {
+                                                  // active
+                                                  if (states.contains(MaterialState.selected)) {
+                                                    return Colors.purple;
+                                                  }
+                                                  // inactive
+                                                  return const Color(0xFFDAE0E6);
+                                                }),
                                                 onChanged: (bool? value) {
                                                   setState(() {
                                                     groupValue = value ?? false;
                                                   });
                                                 },
                                               ),
-                                              const TextWidget(
-                                                text:
-                                                    'Invite a user to explore my org tree',
-                                                textSize: 12,
-                                                fontWeight: FontWeight.w400,
-                                                color: AppColors.raisinBlack,
+                                              const Text(
+                                                'Invite a user to explore my org tree',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: AppColors.raisinBlack,
+                                                ),
+
+                                                // Make sure TextWidget doesn’t have internal padding
                                               )
                                             ],
                                           ),
-                                          Row(
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                          child: Row(
                                             children: [
                                               Radio<bool>(
                                                 groupValue: groupValue,
                                                 value: false,
+                                                fillColor: MaterialStateProperty.resolveWith((states) {
+                                                  // active
+                                                  if (states.contains(MaterialState.selected)) {
+                                                    return Colors.purple;
+                                                  }
+                                                  // inactive
+                                                  return const Color(0xFFDAE0E6);
+                                                }),
                                                 onChanged: (bool? value) {
                                                   setState(() {
                                                     groupValue = value ?? true;
+                                                    height = 470.0;
                                                   });
                                                 },
                                               ),
-                                              const TextWidget(
-                                                text:
-                                                    'Invite a user to join under me',
-                                                textSize: 12,
-                                                fontWeight: FontWeight.w400,
-                                                color: AppColors.raisinBlack,
+                                              const Text(
+                                                'Invite a user to join under me',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: AppColors.raisinBlack,
+                                                ),
                                               )
                                             ],
                                           ),
-                                        ],
-                                      ),
-                                      if (!groupValue)
-                                        const SizedBox(height: 10),
-                                      if (!groupValue)
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12.0),
-                                          child: SizedBox(
-                                            width: double.infinity,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const TextWidget(
-                                                  text: 'Invite as',
-                                                  textSize: 12,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: AppColors.black80,
-                                                ),
-                                                const SizedBox(
-                                                  height: 10.0,
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    _showMultiSelector(
-                                                        context,
-                                                        setState,
-                                                        newItems,
-                                                        selectedItem);
-                                                  },
-                                                  child: Container(
-                                                    height: 45,
-                                                    width: double.infinity,
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 12,
-                                                        vertical: 4),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                          color:
-                                                              AppColors.black60,
-                                                          width: 1),
-                                                    ),
-                                                    child: const Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        TextWidget(
-                                                          text: 'Employee',
-                                                          textSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                        ),
-                                                        Icon(Icons
-                                                            .arrow_drop_down)
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
                                         ),
-                                      const SizedBox(height: 10),
+                                      ],
+                                    ),
+                                    if (!groupValue) const SizedBox(height: 14),
+                                    if (!groupValue)
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 12.0),
-                                        child: AppButton.outlineButton(
-                                            onButtonPressed: () {
-                                              _showShareBottomSheet(context);
-                                            },
-                                            title: 'Send Invite',
-                                            fontSize: 14,
-                                            textColor: AppColors.purple100,
-                                            borderColor: AppColors.purple100,
-                                            borderRadius: 8),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 12.0),
-                                        child: TextWidget(
-                                          text: 'Copy Invite/QR Code:',
-                                          textSize: 14,
-                                          color: AppColors.davyGrey,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 83.25,
-                                            height: 83.25,
-                                            child: Image.network(
-                                              'https://support.thinkific.com/hc/article_attachments/360042081334/5d37325ea1ff6.png',
-                                              fit: BoxFit.contain,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 10.0),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                        child: SizedBox(
+                                          width: double.infinity,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              RichText(
-                                                text: const TextSpan(
-                                                  style: TextStyle(
-                                                    color: AppColors.black80,
-                                                  ),
-                                                  children: [
-                                                    TextSpan(
-                                                      text: 'purus',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 12),
-                                                    ),
-                                                    TextSpan(
-                                                      text: '/Invite',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 12),
-                                                    ),
-                                                  ],
-                                                ),
+                                              const TextWidget(
+                                                text: 'Invite as',
+                                                textSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColors.black80,
                                               ),
                                               const SizedBox(
-                                                width: 5.0,
+                                                height: 8.0,
                                               ),
-                                              Image.asset(
-                                                ImagePath.copy,
-                                                width: 16,
-                                                height: 16,
-                                                fit: BoxFit.contain,
-                                              )
+                                              InkWell(
+                                                onTap: () {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return StatefulBuilder(
+                                                          builder: (
+                                                        BuildContext context,
+                                                        _setState,
+                                                      ) {
+                                                        return AlertDialog(
+                                                          backgroundColor:
+                                                              AppColors.white,
+                                                          content: SizedBox(
+                                                            width: double
+                                                                .maxFinite,
+                                                            child: ListView
+                                                                .builder(
+                                                              shrinkWrap: true,
+                                                              itemCount:
+                                                                  newItems
+                                                                      .length,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index) {
+                                                                bool
+                                                                    isSelected =
+                                                                    selectedItem ==
+                                                                        newItems[
+                                                                            index];
+                                                                return InkWell(
+                                                                  onTap: () {
+                                                                    _setState(
+                                                                        () {
+                                                                      selectedItem =
+                                                                          newItems[
+                                                                              index];
+                                                                    });
+                                                                    setState(
+                                                                        () {
+                                                                      selectedItem =
+                                                                          newItems[
+                                                                              index];
+                                                                    });
+                                                                  },
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                        vertical:
+                                                                            8.0),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Icon(
+                                                                          isSelected
+                                                                              ? Icons.check_box
+                                                                              : Icons.check_box_outline_blank,
+                                                                          color: isSelected
+                                                                              ? AppColors.purple100
+                                                                              : AppColors.gainsBro,
+                                                                        ),
+                                                                        const SizedBox(
+                                                                            width:
+                                                                                10),
+                                                                        TextWidget(
+                                                                          text:
+                                                                              newItems[index],
+                                                                          textSize:
+                                                                              16,
+                                                                          fontWeight:
+                                                                              FontWeight.w400,
+                                                                          color:
+                                                                              AppColors.black80,
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
+                                                          ),
+                                                        );
+                                                      });
+                                                    },
+                                                  );
+                                                },
+                                                child: Container(
+                                                  height: 45,
+                                                  width: double.infinity,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 4),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      border: Border.all(
+                                                          color:
+                                                              AppColors.black60,
+                                                          width: 0.5),
+                                                      color: AppColors.white),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        selectedItem.isEmpty
+                                                            ? 'Select Option'
+                                                            : selectedItem,
+                                                        style: const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 14,
+                                                            color: AppColors
+                                                                .black80),
+                                                      ),
+                                                      const Icon(
+                                                          Icons.arrow_drop_down)
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                );
-                              }),
+                                    const SizedBox(height: 14),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12.0),
+                                      child: AppButton.outlineButton(
+                                          onButtonPressed: () {
+                                            _showShareBottomSheet(context);
+                                          },
+                                          title: 'Send Invite',
+                                          fontSize: 14,
+                                          textColor: AppColors.purple100,
+                                          borderColor: AppColors.purple100,
+                                          borderRadius: 8,
+                                          bgColor: AppColors.white),
+                                    ),
+                                    const SizedBox(height: 14),
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 12.0),
+                                      child: TextWidget(
+                                        text: 'Copy Invite/QR Code:',
+                                        textSize: 16,
+                                        color: AppColors.davyGrey,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 14),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: 83.25,
+                                          height: 83.25,
+                                          child: Image.network(
+                                            'https://support.thinkific.com/hc/article_attachments/360042081334/5d37325ea1ff6.png',
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 14.0),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            RichText(
+                                              text: const TextSpan(
+                                                style: TextStyle(
+                                                  color: AppColors.black80,
+                                                ),
+                                                children: [
+                                                  TextSpan(
+                                                    text: 'purus',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 12),
+                                                  ),
+                                                  TextSpan(
+                                                    text: '/Invite',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 12),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 8.0,
+                                            ),
+                                            Image.asset(
+                                              ImagePath.copy,
+                                              width: 16,
+                                              height: 16,
+                                              fit: BoxFit.contain,
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                             );
-                          });
-                    },
-                    child: const Text('open')),
-              ],
-            )),
+                          }),
+                        );
+                      });
+                },
+                child: const Text('open')),
+          ],
+        )),
       )),
     );
   }
-
 
   void _showShareBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -358,8 +469,8 @@ class _InvitememberState extends State<Invitemember> {
   }
 }
 
-void _showMultiSelector(BuildContext context, StateSetter setState,
-    List<String> items, List<String> selectedItem) {
+void _showMultiSelector(BuildContext context, StateSetter _setState,
+    List<String> items, String selectedItem) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -373,15 +484,14 @@ void _showMultiSelector(BuildContext context, StateSetter setState,
                 shrinkWrap: true,
                 itemCount: items.length,
                 itemBuilder: (context, index) {
-                  bool isSelected = selectedItem.contains(items[index]);
+                  bool isSelected = selectedItem == items[index];
                   return InkWell(
                     onTap: () {
                       setState(() {
-                        if (isSelected) {
-                          selectedItem.remove(items[index]);
-                        } else {
-                          selectedItem.add(items[index]);
-                        }
+                        selectedItem = items[index];
+                      });
+                      _setState(() {
+                        selectedItem = items[index];
                       });
                     },
                     child: Padding(
@@ -399,7 +509,7 @@ void _showMultiSelector(BuildContext context, StateSetter setState,
                           const SizedBox(width: 10),
                           TextWidget(
                             text: items[index],
-                            textSize: 14,
+                            textSize: 16,
                             fontWeight: FontWeight.w400,
                             color: AppColors.black80,
                           )
@@ -428,7 +538,7 @@ void _showMultiSelector(BuildContext context, StateSetter setState,
         },
       );
     },
-  );
+  ).then((e) {});
 }
 
 class ShareOptionRow extends StatelessWidget {
@@ -463,10 +573,9 @@ class ShareOptionRow extends StatelessWidget {
             ),
             TextWidget(
               text: title,
-              textSize: 12,
+              textSize: 14,
               fontWeight: FontWeight.w600,
               color: AppColors.raisinBlack,
-
             ),
           ],
         ),
